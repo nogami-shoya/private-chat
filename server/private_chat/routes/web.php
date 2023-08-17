@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\PrivateChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,5 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/Sample', function () {
-    return Inertia::render('Sample');
-});
+Route::get('/create-url', [PrivateChatController::class, 'create'])->name('hoge.create');
+Route::post('/create-url', [PrivateChatController::class, 'store'])->name('hoge.store');

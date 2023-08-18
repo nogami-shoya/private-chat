@@ -14,7 +14,7 @@ class PrivateChatController extends Controller
     /**
      * URL作成ページ（最初のページ）
      */
-    public function create()
+    public function home()
     {
         return Inertia::render('CreateUrl');
     }
@@ -22,7 +22,7 @@ class PrivateChatController extends Controller
     /**
      * URLの登録処理
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $channel = new Channel();
         $channel->channel_name = $request->get('channel_name');

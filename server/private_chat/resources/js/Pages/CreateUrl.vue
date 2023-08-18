@@ -7,7 +7,7 @@ const form = reactive({
 });
 
 const submit = () => {
-    router.post('/create-url', {
+    router.post('/create', {
         channel_name: form.channel_name,
         url: crypto.randomUUID(),
     })

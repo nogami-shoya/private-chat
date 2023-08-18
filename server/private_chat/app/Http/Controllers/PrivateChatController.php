@@ -16,7 +16,7 @@ class PrivateChatController extends Controller
      */
     public function home()
     {
-        return Inertia::render('CreateUrl');
+        return Inertia::render('CreateChannel');
     }
 
     /**

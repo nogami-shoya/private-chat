@@ -15,5 +15,9 @@ use App\Http\Controllers\PrivateChatController;
 |
 */
 
-Route::get('/create-url', [PrivateChatController::class, 'create'])->name('hoge.create');
-Route::post('/create-url', [PrivateChatController::class, 'store'])->name('hoge.store');
+// チャットスペース作成画面
+Route::get('/create-url', [PrivateChatController::class, 'create'])->name('private-chat.create');
+// チャットスペース作成
+Route::post('/create-url', [PrivateChatController::class, 'store'])->name('private-chat.store');
+// チャットスペース画面
+Route::get('/chat-space/{uuid}', [PrivateChatController::class, 'index'])->name('private-chat.index');

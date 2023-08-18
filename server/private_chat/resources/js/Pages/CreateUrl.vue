@@ -1,14 +1,24 @@
-
 <script setup>
-import { Link, router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3';
+import { reactive } from 'vue';
 
-const createUrl = () => {
+const form = reactive({
+    channel_name: null,
+});
+
+const submit = () => {
     router.post('/create-url', {
-        url: crypto.randomUUID()
+        channel_name: form.channel_name,
+        url: crypto.randomUUID(),
     })
 }
 </script>
 
+
+
 <template>
-    <button type="button" class="btn btn-primary" @click="createUrl">URLを作成</button>
-</template>
+    <form @submit.prevent="submit">
+            <input id="channel_name" v-model="form.channel_name" placeholder="チャンネル名を入力（空でも可）"/>
+            <button type="submit" class="btn btn-primary">チャンネルを作成</button>
+        </form>
+  </template>

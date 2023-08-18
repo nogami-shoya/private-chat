@@ -34,6 +34,7 @@ services:
         MYSQL_ROOT_PASSWORD: password
 
   phpmyadmin:
+    platform: linux/x86_64
     image: phpmyadmin/phpmyadmin:5
     ports:
       - 8888:80

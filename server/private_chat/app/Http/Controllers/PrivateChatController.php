@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use PhpParser\Node\Expr\Cast\String_;
 use App\Models\Channel;
+use App\Models\User;
 
 use function Termwind\render;
 
@@ -29,6 +30,13 @@ class PrivateChatController extends Controller
         $channel->url = $request->get('url');
         $channel->save();
 
-        return Inertia::render('CreateUrl');
+        $channel_id = $channel->id;
+
+        $user = new User();
+        $user->channel_id = $channel_id;
+        $user->user_name = $request->get('user_name');
+        $user->save();
+
+        return Inertia::render('CreateChannel');
     }
 }

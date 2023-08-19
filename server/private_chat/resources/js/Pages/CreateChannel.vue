@@ -16,7 +16,6 @@ const submit = () => {
 </script>
 
 
-
 <template>
     <form @submit.prevent="submit">
         <label for="channel_name">チャンネル名称：</label>

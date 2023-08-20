@@ -13,6 +13,11 @@ class Channel extends Model
 
     public function users()
     {
-        return $this->hasMany('App\Model\User');
+        return $this->hasMany(User::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 }

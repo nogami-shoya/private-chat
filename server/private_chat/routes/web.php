@@ -20,4 +20,4 @@ Route::get('/', [PrivateChatController::class, 'home'])->name('private-chat.home
 // チャットスペース作成
 Route::post('/create', [PrivateChatController::class, 'create'])->name('private-chat.create');
 // チャットスペース画面
-Route::get('/chat-space/{uuid}', [PrivateChatController::class, 'index'])->name('private-chat.index');
+Route::get('/chat-space/{url}', [PrivateChatController::class, 'chatspace'])->name('private-chat.chatspace');

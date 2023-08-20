@@ -12,4 +12,9 @@ class Message extends Model
     {
         return $this->hasMany('App\Model\Channel');
     }
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
 }

@@ -7,11 +7,18 @@ use Inertia\Inertia;
 use PhpParser\Node\Expr\Cast\String_;
 use App\Models\Channel;
 use App\Models\User;
+use App\Services\GetChatSpaceService;
 
 use function Termwind\render;
 
 class PrivateChatController extends Controller
 {
+    protected $getChatSpaceService;
+
+    public function __construct(GetChatSpaceService $getChatSpaceService)
+    {
+        $this->getChatSpaceService = $getChatSpaceService;
+    }
     /**
      * URL作成ページ（最初のページ）
      */
@@ -37,6 +44,17 @@ class PrivateChatController extends Controller
         $user->user_name = $request->get('user_name');
         $user->save();
 
-        return Inertia::render('CreateChannel');
+        return redirect()->route('private-chat.chatspace', [
+            'url' => $channel->url
+        ]);
+    }
+
+    /**
+     * チャットスペース
+     */
+    public function chatspace($url)
+    {
+        $this->getChatSpaceService->getMessage($url);
+        return Inertia::render('ChatSpace');
     }
 }

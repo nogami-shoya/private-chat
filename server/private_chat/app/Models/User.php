@@ -10,4 +10,19 @@ class User extends Model
     use HasFactory;
     protected $fillable = ['channel_id', 'user_name'];
     public $timestamps = false;
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
+    public function message()
+    {
+        return $this->belongsTo(Message::class);
+    }
 }

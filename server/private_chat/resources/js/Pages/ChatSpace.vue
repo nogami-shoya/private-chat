@@ -1,5 +1,12 @@
-<script setup>
+<script>
+    import { defineComponent } from 'vue'
+
+    export default defineComponent({
+        props: {
+            userMessages: Array
+        }
+    })
 </script>
 <template>
-    <h1>goge</h1>
+    <h1>{{ userMessages }}</h1>
 </template>

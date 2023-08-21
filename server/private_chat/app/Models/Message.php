@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
-    public function channels()
+    public function user()
     {
-        return $this->hasMany('App\Model\Channel');
+        return $this->belongsTo(User::class);
     }
 
     public function channel()

@@ -16,11 +16,11 @@ class GetChatSpaceService
         // idを取得
         $id = Channel::where('url', $url)->value('id');
         // チャンネルのIDを元に（ユーザー情報（id, user_name）とメッセージ情報（user_id, message, created_at）を取得）
-        $user = User::with(['message:user_id,message,created_at'])
-            ->whereHas('message', function($q) use ($id) {
-            $q->where('message.channel_id', $id);
+        $user_messages = User::with(['message:id,user_id,message,created_at'])
+            ->whereHas('messages', function($q) use ($id) {
+            $q->where('channel_id', $id);
         })->get();
 
-        dd($user);
+        return $user_messages;
     }
 }

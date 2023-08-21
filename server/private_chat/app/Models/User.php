@@ -20,9 +20,4 @@ class User extends Model
     {
         return $this->belongsTo(Channel::class);
     }
-
-    public function message()
-    {
-        return $this->belongsTo(Message::class);
-    }
 }

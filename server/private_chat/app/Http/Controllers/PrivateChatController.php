@@ -54,7 +54,10 @@ class PrivateChatController extends Controller
      */
     public function chatspace($url)
     {
-        $this->getChatSpaceService->getMessage($url);
-        return Inertia::render('ChatSpace');
+        // ユーザー情報とそれに紐づくメッセージを取得する
+        $user_messages = $this->getChatSpaceService->getMessage($url);
+        return Inertia::render('ChatSpace', [
+            'userMessages' => $user_messages
+        ]);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use PhpParser\Node\Expr\Cast\String_;
 use App\Models\Channel;
+use App\Models\Message;
 use App\Models\User;
 use App\Services\GetChatSpaceService;
 
@@ -20,7 +21,7 @@ class PrivateChatController extends Controller
         $this->getChatSpaceService = $getChatSpaceService;
     }
     /**
-     * URL作成ページ（最初のページ）
+     * URL作成ページ（最初のページ）'/'
      */
     public function home()
     {
@@ -28,7 +29,7 @@ class PrivateChatController extends Controller
     }
 
     /**
-     * URLの登録処理
+     * URLの登録処理 '/create'
      */
     public function create(Request $request)
     {
@@ -37,27 +38,61 @@ class PrivateChatController extends Controller
         $channel->url = $request->get('url');
         $channel->save();
 
-        $channel_id = $channel->id;
-
         $user = new User();
-        $user->channel_id = $channel_id;
+        $user->channel_id = $channel->id;
         $user->user_name = $request->get('user_name');
         $user->save();
 
         return redirect()->route('private-chat.chatspace', [
             'url' => $channel->url
+        ])->withInput(['user_id' => $user->id, 'channel_id' => $channel->id]);
+    }
+
+    /**
+     * チャットスペース '/chat-space/{url}'
+     */
+    public function chatspace(Request $request, $url)
+    {
+        $user_id = $request->old('user_id');
+        $channel_id = $request->old('channel_id');
+
+        // チャンネル作成者ではない場合新たにユーザーを登録
+        if (empty($user_id)) {
+            // urlを元にchannelのidを取得
+            $channel_id = Channel::where('url', $url)->value('id');
+            // urlを共有された人を登録する
+            $user = new User();
+            $user->channel_id = $channel_id;
+            $user->user_name = 'ゲスト';
+            $user->save();
+
+            $user_id = $user->id;
+            $channel_id = $channel_id;
+        }
+
+        // ユーザー情報とそれに紐づくメッセージを取得してフロントに渡す
+        $user_info = $this->getChatSpaceService->getUserInfo($url);
+        return Inertia::render('ChatSpace', [
+            'userInfo' => $user_info,
+            'userId' => $user_id,
+            'channelId' => $channel_id
         ]);
     }
 
     /**
-     * チャットスペース
+     * メッセージ登録処理 'send/message'
      */
-    public function chatspace($url)
+    public function sendmessage(Request $request)
     {
-        // ユーザー情報とそれに紐づくメッセージを取得する
-        $user_messages = $this->getChatSpaceService->getMessage($url);
+        $message = new Message();
+        $message->user_id = $request->get('userId');
+        $message->channel_id = $request->get('channelId');
+        $message->message = $request->get('message');
+        $message->save();
+
         return Inertia::render('ChatSpace', [
-            'userMessages' => $user_messages
+            'userId' => $request->get('userId'),
+            'channelId' => $request->get('channelId')
         ]);
     }
 }

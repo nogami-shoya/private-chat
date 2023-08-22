@@ -10,17 +10,22 @@ class GetChatSpaceService
     /**
      * URLを元にメッセージを取得
      */
-    public function getMessage($url)
+    public function getUserInfo($url)
     {
-        // ddで見た後はリポジトリに移動させる
         // idを取得
+
         $id = Channel::where('url', $url)->value('id');
         // チャンネルのIDを元に（ユーザー情報（id, user_name）とメッセージ情報（user_id, message, created_at）を取得）
         $user_messages = User::with(['message:id,user_id,message,created_at'])
             ->whereHas('messages', function($q) use ($id) {
             $q->where('channel_id', $id);
         })->get();
+        // dd($user_messages);
 
-        return $user_messages;
+        // ユーザー情報を取得
+        $user_info = User::where('channel_id', $id)->get();
+
+
+        return [$user_messages, $user_info];
     }
 }

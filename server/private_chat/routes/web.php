@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\PrivateChatController;
 
 /*
@@ -21,3 +20,5 @@ Route::get('/', [PrivateChatController::class, 'home'])->name('private-chat.home
 Route::post('/create', [PrivateChatController::class, 'create'])->name('private-chat.create');
 // チャットスペース画面
 Route::get('/chat-space/{url}', [PrivateChatController::class, 'chatspace'])->name('private-chat.chatspace');
+// メッセージ送信
+Route::post('/send/message', [PrivateChatController::class, 'sendmessage'])->name('private-chat.sendmessage');

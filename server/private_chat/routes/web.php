@@ -20,5 +20,7 @@ Route::get('/', [PrivateChatController::class, 'home'])->name('private-chat.home
 Route::post('/create', [PrivateChatController::class, 'create'])->name('private-chat.create');
 // チャットスペース画面
 Route::get('/chat-space/{url}', [PrivateChatController::class, 'chatspace'])->name('private-chat.chatspace');
-// メッセージ送信
+// メッセージ送信（axios）
 Route::post('/send/message', [PrivateChatController::class, 'sendmessage'])->name('private-chat.sendmessage');
+// メッセージ一覧を取得（axios）
+Route::get('/get/messages',[PrivateChatController::class, 'getmessages'])->name('private-chat.getmessages');

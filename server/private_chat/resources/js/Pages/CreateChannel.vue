@@ -7,14 +7,15 @@ const form = reactive({
     user_name: null
 });
 
-const submit = () => {
+const send = () => {
+    console.log(form.channel_name);
     router.post('/create', {
         channel_name: form.channel_name,
         user_name: form.user_name,
         url: crypto.randomUUID(),
     })
-    form.channel_name = '';
-    form.user_name = '';
+    // form.channel_name = '';
+    // form.user_name = '';
 }
 </script>
 
@@ -25,6 +26,6 @@ const submit = () => {
         <input id="channel_name" v-model="form.channel_name" placeholder="チャンネル"/>
         <label for="user_name">ユーザー名称：</label>
         <input id="user_name" v-model="form.user_name" placeholder="ゲスト"/>
-        <button type="submit" class="btn btn-primary">チャンネルを作成</button>
+        <button v-on:click="send" class="btn btn-primary">チャンネルを作成</button>
     </form>
   </template>

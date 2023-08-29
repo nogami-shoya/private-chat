@@ -29,7 +29,7 @@ class PrivateChatController extends Controller
     }
 
     /**
-     * URLの登録処理 '/create'
+     * チャットスペースの作成処理 '/create'
      */
     public function create(Request $request)
     {
@@ -53,10 +53,12 @@ class PrivateChatController extends Controller
      */
     public function chatspace(Request $request, $url)
     {
+        // フロントで
         $user_id = $request->old('user_id');
         $channel_id = $request->old('channel_id');
 
-        // チャンネル作成者ではない場合新たにユーザーを登録
+        // チャンネル作成者ではない場合新たにユーザーを登録（URL共有された人用）
+        // TODO:同じ端末からアクセスした人の識別（更新するたびユーザーが増えるたり、メッセージ送信者が自分ではなくなるため）
         if (empty($user_id)) {
             // urlを元にchannelのidを取得
             $channel_id = Channel::where('url', $url)->value('id');
@@ -71,7 +73,7 @@ class PrivateChatController extends Controller
         }
 
         // ユーザー情報とそれに紐づくメッセージを取得してフロントに渡す
-        $user_info = $this->getChatSpaceService->getUserInfo($url);
+        [$user_messages, $user_info] = $this->getChatSpaceService->getUserInfo($url);
         return Inertia::render('ChatSpace', [
             'userInfo' => $user_info,
             'userId' => $user_id,
@@ -89,10 +91,19 @@ class PrivateChatController extends Controller
         $message->channel_id = $request->get('channelId');
         $message->message = $request->get('message');
         $message->save();
+    }
 
+    /**
+     * メッセージ一覧取得処理
+     */
+    public function getmessages(Request $request)
+    {
+        $url = $request->get('url');
+        // ユーザー情報とそれに紐づくメッセージを取得してフロントに渡す
+        [$user_messages, $user_info] = $this->getChatSpaceService->getUserInfo($url);
         return Inertia::render('ChatSpace', [
-            'userId' => $request->get('userId'),
-            'channelId' => $request->get('channelId')
+            'userMessages' => $user_messages,
+            'userInfo' => $user_info
         ]);
     }
 }

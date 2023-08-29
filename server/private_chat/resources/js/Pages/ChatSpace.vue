@@ -4,7 +4,7 @@
 
     // コントローラーから値を受け取り用
     const props = defineProps({
-        userInfo: {
+        userMessages: {
             type: Array
         },
         userId: {
@@ -20,23 +20,24 @@
         message: null,
     });
 
-    // // メッセージ取得
-    // const getMessage = () => {
-    //     let url = location.pathname;
-    //     url = url.replace('/chat-space/', '')
-    //     axios.post('/get/messages', {'url': url})
-    //         .then(() => {
-
-    //         })
-    //         .catch(err => {
-    //             if(err.response) {
-    //             console.log(err);
-    //             }
-    //         });
-    // }
+    // メッセージ取得
+    const getMessage = () => {
+        let url = location.pathname;
+        url = url.replace('/chat-space/', '')
+        axios.post('/get/messages', {'url': url})
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(err => {
+                if(err.response) {
+                console.log(err);
+                }
+            });
+    }
 
     // メッセージ送信
-    const send = () => {
+    const sendMessage = () => {
+        console.log('test');
         const params = new URLSearchParams();
         params.append('message', form.message);
         params.append("userId", props.userId);
@@ -48,6 +49,7 @@
             }})
             .then(() => {
                 form.message = "";
+                getMessage();
             })
             .catch(err => {
                 if(err.response) {
@@ -61,12 +63,12 @@
 <template>
     <div>
         <Header />
-        <h1>{{ userInfo }}</h1>
+        <h1>{{ userMessages }}</h1>
         <h2>{{ userId }}</h2>
         <h2>{{ channelId }}</h2>
         <form @submit.prevent="send">
             <input id="channel_name" v-model="form.message" placeholder="Aa"/>
-            <button type="submit" v-on:click="send" class="btn btn-primary">送信</button>
+            <button type="button" v-on:click="sendMessage" class="btn btn-primary">送信</button>
         </form>
         <button type="button" v-on:click="getMessage">testbutton</button>
     </div>

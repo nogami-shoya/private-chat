@@ -23,4 +23,4 @@ Route::get('/chat-space/{url}', [PrivateChatController::class, 'chatspace'])->na
 // メッセージ送信（axios）
 Route::post('/send/message', [PrivateChatController::class, 'sendmessage'])->name('private-chat.sendmessage');
 // メッセージ一覧を取得（axios）
-Route::get('/get/messages',[PrivateChatController::class, 'getmessages'])->name('private-chat.getmessages');
+Route::match(['get', 'post'], '/get/messages',[PrivateChatController::class, 'getmessages'])->name('private-chat.getmessages');

@@ -8,28 +8,51 @@
         getMessage()
     }
 
+    // 時刻のみを取得する
+    const dateFormat = (createdDate) => {
+        let date = new Date(createdDate);
+        date = date.toLocaleTimeString()
+        return date.slice(0, 5);
+    }
+
     // メッセージ取得しhtml要素として反映
     const getMessage = () => {
+        const message = document.getElementById('message');
         let messageHtml = '';
+        let rightOrLeft = 'chatLeft';
         let url = location.pathname;
         url = url.replace('/chat-space/', '')
         axios.post('/get/messages', {'url': url})
             .then((response) => {
-                console.log(userId);
                 response.data.forEach(element => {
-                    console.log(element);
+                    let userName = `
+                        <p class="user-name">
+                            ${element.user.user_name}
+                        </p>
+                    `
+                    // 自身のメッセージ判別
+                    if(userId === element.user_id) {
+                        rightOrLeft = 'chatRight';
+                        userName = '';
+                    }
+
                     messageHtml +=  `
-                        <div class="c-talk__fukidashi c-talk__fukidashi--left">
-                            <div class="c-talk__icon">
-                                ${element.created_at}
-                            </div>
-                            <div class="c-talk__text messages">
-                                <p>${element.message}</p>
+                        <div class="${rightOrLeft} clearfix">
+                            ${userName}
+                            <div class="comments">
+                                <div class="comment">
+                                    ${element.message}
+                                </div>
+                                <div class="time-box">
+                                    <span class="time">${dateFormat(element.created_at)}</span>
+                                </div>
                             </div>
                         </div>
                     `
                 });
-                document.getElementById('message').innerHTML = messageHtml;
+                message.innerHTML = messageHtml;
+                message.scrollTo(0, message.scrollHeight);
+
             })
             .catch(err => {
                 if(err.response) {
@@ -38,10 +61,11 @@
             });
     }
     defineExpose({ getMessage });
+    // fedege
 </script>
 
 <template>
-    <div id="message" class="c-talk__body">
+    <div id="message">
         <!-- メッセージ反映 -->
     </div>
 </template>

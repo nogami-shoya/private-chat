@@ -37,11 +37,11 @@
 
 
 <template>
-    <div>
+    <div id="message-send">
         <MessageList ref="messageList"/>
-        <form @submit.prevent="send">
-            <input id="channel_name" v-model="form.message" placeholder="Aa"/>
-            <button type="button" v-on:click="sendMessage" class="btn btn-primary">送信</button>
+        <form @submit.prevent="send" id="form">
+            <textarea id="channel_name" rows="1" v-model="form.message" placeholder="Aa"></textarea>
+            <button class="btn btn-primary" type="button" v-on:click="sendMessage">>></button>
         </form>
     </div>
 </template>

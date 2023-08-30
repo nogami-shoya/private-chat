@@ -19,7 +19,7 @@
 </script>
 
 <template>
-    <div>
+    <div id="chat-space">
         <Header />
         <Form/>
     </div>

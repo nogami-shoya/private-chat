@@ -1,20 +1,13 @@
 <script setup>
     import MessageList from '@/Components/MessageList.vue';
-    import { ref, reactive } from 'vue';
+    import { inject, ref, reactive } from 'vue';
 
+    // userIdとchannelIdのの取得
+    const userId = inject('userId');
+    const channelId = inject('channelId');
+
+    // 子コンポーネントメソッド呼び出し用
     const messageList = ref();
-
-    const props = defineProps({
-        userMessages: {
-            type: Array
-        },
-        userId: {
-            type: Number
-        },
-        channelId: {
-            type: Number
-        }
-    })
 
     // form用
     const form = reactive({
@@ -25,8 +18,8 @@
     const sendMessage = () => {
         const data = new FormData();
         data.append('message', form.message);
-        data.append('userId', props.userId);
-        data.append('channelId', props.channelId);
+        data.append('userId', userId);
+        data.append('channelId', channelId);
 
         axios.post('/send/message', data)
             .then(() => {

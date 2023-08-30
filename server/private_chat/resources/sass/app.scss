@@ -6,3 +6,104 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// color
+$borderColor: #A0C3D2; //ボーダーの色
+$headColor: #EAE0DA; //タイトル背景色
+$bodyColor: #EAC7C7; // 背景色
+$textColor: #333333; // 吹き出しの色
+$textBgColor: #EAE0DA; // 吹き出しの背景色
+
+// reset & base
+*,::before,::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Rounded Mplus 1c";
+}
+img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+// ここから
+.c-talk {
+  border: 5px solid $borderColor;
+  // タイトル
+  &__head {
+    background-color: $headColor;
+    padding: 10px;
+  }
+  // トークを囲むdiv
+  &__body {
+    background-color: $bodyColor;
+    padding: 20px;
+  }
+  // アイコン
+  &__icon {
+    max-width: 50px;
+    min-width: 50px;
+    img {
+      border-radius: 50%;
+    }
+  }
+  // 吹き出し
+  &__fukidashi {
+    display: flex;
+    & + & {
+      margin-top: 30px;
+    }
+    // 左側
+    &--left {
+      p {
+        margin-left: 25px;
+        &::before {
+          clip-path: polygon(100% 0%, 0% 50%, 100% 100%);
+          left: -15px;
+        }
+      }
+    }
+    // 右側
+    &--right {
+      flex-direction: row-reverse;
+      p {
+        margin-right: 25px;
+        &::before {
+          clip-path: polygon(0% 0%, 0% 100%, 100% 50%);
+          right: -15px;
+        }
+      }
+    }
+  }
+  // コメントテキスト
+  &__text {
+    max-width: 75%;
+    filter: drop-shadow(3px 3px 5px rgba($color: #000000, $alpha: .3));
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    p {
+      position: relative;
+      display: inline-block;
+      color: $textColor;
+      background-color: $textBgColor;
+      padding: 10px;
+      border-radius: 20px;
+      & + p {
+        margin-top: 15px;
+        &::before {
+          content: none;
+        }
+      }
+      &::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 15px;
+        background-color: $textBgColor;
+        position: absolute;
+        top: 10px;
+      }
+    }
+  }
+}

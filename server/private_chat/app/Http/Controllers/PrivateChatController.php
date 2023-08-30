@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use PhpParser\Node\Expr\Cast\String_;
 use App\Models\Channel;
 use App\Models\Message;
 use App\Models\User;
@@ -21,7 +20,7 @@ class PrivateChatController extends Controller
         $this->getChatSpaceService = $getChatSpaceService;
     }
     /**
-     * URL作成ページ（最初のページ）'/'
+     * URL作成ページ（最初のページ）
      */
     public function home()
     {
@@ -29,7 +28,7 @@ class PrivateChatController extends Controller
     }
 
     /**
-     * チャットスペースの作成処理 '/create'
+     * チャットスペースの作成処理
      */
     public function create(Request $request)
     {
@@ -49,7 +48,7 @@ class PrivateChatController extends Controller
     }
 
     /**
-     * チャットスペース '/chat-space/{url}'
+     * チャットスペース画面
      */
     public function chatspace(Request $request, $url)
     {
@@ -72,18 +71,14 @@ class PrivateChatController extends Controller
             $channel_id = $channel_id;
         }
 
-        // メッセージを取得
-        $messages = $this->getChatSpaceService->getMessages($url);
-
         return Inertia::render('ChatSpace', [
-            'userMessages' => $messages,
             'userId' => $user_id,
             'channelId' => $channel_id
         ]);
     }
 
     /**
-     * メッセージ登録処理 'send/message'
+     * メッセージ登録処理
      */
     public function sendmessage(Request $request)
     {

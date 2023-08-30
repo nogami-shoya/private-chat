@@ -1,5 +1,8 @@
 <script setup>
     import axios from 'axios';
+    import { inject } from 'vue';
+
+    const userId = inject('userId');
 
     window.onload = function() {
         getMessage()
@@ -12,11 +15,17 @@
         url = url.replace('/chat-space/', '')
         axios.post('/get/messages', {'url': url})
             .then((response) => {
+                console.log(userId);
                 response.data.forEach(element => {
+                    console.log(element);
                     messageHtml +=  `
-                        <div class="messages">
-                            ${element.created_at}<br>
-                            ${element.message}<br>
+                        <div class="c-talk__fukidashi c-talk__fukidashi--left">
+                            <div class="c-talk__icon">
+                                ${element.created_at}
+                            </div>
+                            <div class="c-talk__text messages">
+                                <p>${element.message}</p>
+                            </div>
                         </div>
                     `
                 });
@@ -32,7 +41,7 @@
 </script>
 
 <template>
-    <div id="message">
+    <div id="message" class="c-talk__body">
         <!-- メッセージ反映 -->
     </div>
 </template>

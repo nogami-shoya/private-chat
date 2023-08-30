@@ -72,10 +72,11 @@ class PrivateChatController extends Controller
             $channel_id = $channel_id;
         }
 
-        // ユーザー情報とそれに紐づくメッセージを取得してフロントに渡す
-        $user_messages = $this->getChatSpaceService->getUserInfo($url);
+        // メッセージを取得
+        $messages = $this->getChatSpaceService->getMessages($url);
+
         return Inertia::render('ChatSpace', [
-            'userMessages' => $user_messages,
+            'userMessages' => $messages,
             'userId' => $user_id,
             'channelId' => $channel_id
         ]);
@@ -100,7 +101,7 @@ class PrivateChatController extends Controller
     {
         $url = $request->get('url');
         // ユーザー情報とそれに紐づくメッセージを取得してフロントに渡す
-        $user_messages = $this->getChatSpaceService->getUserInfo($url);
+        $user_messages = $this->getChatSpaceService->getMessages($url);
         return $user_messages;
     }
 }

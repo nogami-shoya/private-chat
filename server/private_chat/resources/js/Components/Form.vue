@@ -4,11 +4,6 @@
 
     const messageList = ref();
 
-    function hoge(){
-        messageList.value.getMessage();
-    }
-
-
     const props = defineProps({
         userMessages: {
             type: Array
@@ -36,11 +31,12 @@
         axios.post('/send/message', data)
             .then(() => {
                 form.message = "";
-                hoge();
+                // 送信時非同期でメッセージ一覧を取得
+                messageList.value.getMessage();
             })
             .catch(err => {
                 if(err.response) {
-                console.log(err);
+                    console.log(err);
                 }
             });
     }

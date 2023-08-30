@@ -1,24 +1,26 @@
 <script setup>
+    import axios from 'axios';
 
-    const props = defineProps({
-            message: {
-                type: String
-            },
-            createdAt: {
-                type: String
-            },
-            userId: {
-                type: Number
-            }
-        })
+    window.onload = function() {
+        getMessage()
+    }
 
-   // メッセージ取得
-   const getMessage = () => {
+    // メッセージ取得しhtml要素として反映
+    const getMessage = () => {
+        let messageHtml = '';
         let url = location.pathname;
         url = url.replace('/chat-space/', '')
         axios.post('/get/messages', {'url': url})
             .then((response) => {
-                console.log(response);
+                response.data.forEach(element => {
+                    messageHtml +=  `
+                        <div class="messages">
+                            ${element.created_at}<br>
+                            ${element.message}<br>
+                        </div>
+                    `
+                });
+                document.getElementById('message').innerHTML = messageHtml;
             })
             .catch(err => {
                 if(err.response) {
@@ -30,9 +32,7 @@
 </script>
 
 <template>
-    <div id="messages">
-        {{ message }}
-        {{ createdAt }}
-        {{ userId }}
+    <div id="message">
+        <!-- メッセージ反映 -->
     </div>
 </template>

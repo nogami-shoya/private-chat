@@ -8,7 +8,6 @@ const form = reactive({
 });
 
 const send = () => {
-    console.log(form.channel_name);
     router.post('/create', {
         channel_name: form.channel_name,
         user_name: form.user_name,

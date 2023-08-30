@@ -19,9 +19,6 @@
 <template>
     <div>
         <Header />
-        <h1>{{ userMessages }}</h1>
-        <h2>{{ userId }}</h2>
-        <h2>{{ channelId }}</h2>
         <Form
             v-bind:userId="userId"
             v-bind:channelId="channelId"

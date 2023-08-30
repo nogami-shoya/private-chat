@@ -11,7 +11,7 @@ class GetChatSpaceService
     /**
      * URLを元にチャンネル内のメッセージを取得
      */
-    public function getUserInfo($url)
+    public function getMessages($url)
     {
         // URlを元にidを取得
         $id = Channel::where('url', $url)->value('id');

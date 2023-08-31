@@ -40,7 +40,7 @@
     <div id="message-send">
         <MessageList ref="messageList"/>
         <form @submit.prevent="send" id="form">
-            <textarea id="channel_name" rows="1" v-model="form.message" placeholder="Aa"></textarea>
+            <textarea id="message-form" rows="1" v-model="form.message" placeholder="Aa"></textarea>
             <button class="btn btn-primary" type="button" v-on:click="sendMessage">>></button>
         </form>
     </div>

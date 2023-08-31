@@ -5,8 +5,12 @@
     const userId = inject('userId');
 
     window.onload = function() {
-        getMessage()
+        getMessage();
     }
+
+    setInterval(function() {
+        getMessage();
+    }, 2000)
 
     // 時刻のみを取得する
     const dateFormat = (createdDate) => {
@@ -34,13 +38,15 @@
                     if(userId === element.user_id) {
                         rightOrLeft = 'right';
                         userName = '';
+                    } else {
+                        rightOrLeft = 'left';
                     }
 
                     messageHtml +=  `
                         <div class="speech-bubble">
                             <div class="user-name">${userName}</div>
                             <div class="sb-bubble sb-line2 sb-${rightOrLeft}">
-                                <p>${element.message}</p>
+                                <p class="messages">${element.message}</p>
                             </div>
                             <span class="${rightOrLeft}time">${dateFormat(element.created_at)}</span>
                         </div>

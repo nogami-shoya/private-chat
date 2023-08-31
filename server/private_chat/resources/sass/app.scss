@@ -9,7 +9,7 @@
 
 html {
     // height: 100%;
-    width: 80%;
+    width: 100%;
     margin: auto;
 }
 
@@ -36,7 +36,7 @@ html {
     display:block;
 }
 
-#channel_name{
+#message-form{
     width: 100%;
 }
 #form {
@@ -153,3 +153,51 @@ html {
     margin: -1.8em 0 0 -1px;
     width: .8em;
   }
+
+  #channelName {
+    display: block;
+    margin-top: 9px;
+    margin-right: 13px;
+  }
+
+  .messages {
+    font-size: 15px;
+  }
+
+  #chat-space {
+    width: 80%;
+    margin: auto;
+  }
+
+  #explanation {
+    margin-top: 50px;
+  }
+
+  .c-img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  #create-channel-form {
+    margin-top: 50px;
+  }
+
+  #form {
+    display: flex;
+  }
+
+  .form-input {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  #home {
+    width: 80%;
+    margin: auto;
+  }
+
+#create-chat {
+    background: #7494C0;
+}

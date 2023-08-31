@@ -19,7 +19,7 @@
     const getMessage = () => {
         const message = document.getElementById('message');
         let messageHtml = '';
-        let rightOrLeft = 'chatLeft';
+        let rightOrLeft = 'left';
         let url = location.pathname;
         url = url.replace('/chat-space/', '')
         axios.post('/get/messages', {'url': url})
@@ -32,27 +32,25 @@
                     `
                     // 自身のメッセージ判別
                     if(userId === element.user_id) {
-                        rightOrLeft = 'chatRight';
+                        rightOrLeft = 'right';
                         userName = '';
                     }
 
                     messageHtml +=  `
-                        <div class="${rightOrLeft} clearfix">
-                            ${userName}
-                            <div class="comments">
-                                <div class="comment">
-                                    ${element.message}
-                                </div>
-                                <div class="time-box">
-                                    <span class="time">${dateFormat(element.created_at)}</span>
-                                </div>
+                        <div class="speech-bubble">
+                            <div class="user-name">${userName}</div>
+                            <div class="sb-bubble sb-line2 sb-${rightOrLeft}">
+                                <p>${element.message}</p>
                             </div>
+                            <span class="${rightOrLeft}time">${dateFormat(element.created_at)}</span>
                         </div>
+
+
+
                     `
                 });
                 message.innerHTML = messageHtml;
                 message.scrollTo(0, message.scrollHeight);
-
             })
             .catch(err => {
                 if(err.response) {

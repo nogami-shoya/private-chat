@@ -27,7 +27,7 @@ const send = () => {
             <div class="row">
                 <div class="col-5 d-flex flex-column">
                     <div class="flex-fill border-bottom">
-                        <h2>会員登録不要なチャットサービス</h2>
+                        <h2>会員登録不要なチャットサービス</h2><br>
                         作成から簡単にチャット画面を作成でき、URLを共有された方がチャットに入室できます<br>
                         作成後URLを共有からURLの共有が行えます
                     </div>
@@ -40,8 +40,8 @@ const send = () => {
                         </div>
                     </form>
                     <div class="flex-fill" id="explanation">
-                        チャンネル名称を空で参加した場合：参加しているメンバー名の一覧になります。<br>
-                        ユーザー名称を空で作成した場合：初期値はゲストとなります。
+                        チャンネル名称を空で参加した場合：参加しているメンバー名の一覧になります<br>
+                        ユーザー名称を空で作成した場合：初期値はゲストとなります
                     </div>
                 </div>
 

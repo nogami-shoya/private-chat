@@ -44,7 +44,7 @@ class PrivateChatController extends Controller
 
         return redirect()->route('private-chat.chatspace', [
             'url' => $channel->url
-        ])->withInput(['user_id' => $user->id, 'channel_id' => $channel->id]);
+        ])->withInput(['user_id' => $user->id, 'channel_id' => $channel->id, 'channel_name' => $channel->channel_name]);
     }
 
     /**
@@ -52,9 +52,9 @@ class PrivateChatController extends Controller
      */
     public function chatspace(Request $request, $url)
     {
-        // フロントで
         $user_id = $request->old('user_id');
         $channel_id = $request->old('channel_id');
+        $channel_name = $request->old('channel_name');
 
         // チャンネル作成者ではない場合新たにユーザーを登録（URL共有された人用）
         // TODO:同じ端末からアクセスした人の識別（更新するたびユーザーが増えるたり、メッセージ送信者が自分ではなくなるため）
@@ -71,9 +71,13 @@ class PrivateChatController extends Controller
             $channel_id = $channel_id;
         }
 
+        // チャンネル名称の取得
+        $channel_name = $this->getChatSpaceService->getChannelName($url);
+
         return Inertia::render('ChatSpace', [
             'userId' => $user_id,
-            'channelId' => $channel_id
+            'channelId' => $channel_id,
+            'channelName' => $channel_name
         ]);
     }
 

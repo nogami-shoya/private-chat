@@ -21,4 +21,13 @@ class GetChatSpaceService
 
         return $user_messages;
     }
+
+    /**
+     * チャンネル名称の取得
+     */
+    public function getChannelName($url)
+    {
+        // URlを元にidを取得
+        return Channel::where('url', $url)->value('channel_name');
+    }
 }

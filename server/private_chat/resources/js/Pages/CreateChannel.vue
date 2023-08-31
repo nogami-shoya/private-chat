@@ -13,8 +13,6 @@ const send = () => {
         user_name: form.user_name,
         url: crypto.randomUUID(),
     })
-    // form.channel_name = '';
-    // form.user_name = '';
 }
 </script>
 

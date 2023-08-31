@@ -6,6 +6,7 @@
     // userIdとchannelIdを保存しておく
     provide('userId', props.userId);
     provide('channelId', props.channelId);
+    provide('channelName', props.channelName);
 
     // コントローラーから値を受け取り用
     const props = defineProps({
@@ -14,6 +15,9 @@
         },
         channelId: {
             type: Number
+        },
+        channelName: {
+            type: String
         }
     })
 </script>

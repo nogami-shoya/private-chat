@@ -1,6 +1,7 @@
 version: '3.9'
 volumes:
   mysql-volume:
+  redis-volume:
 services:
   nginx:
     image: nginx:latest
@@ -42,3 +43,12 @@ services:
       - ${PHP_MYADMIN_PORT}:80
     depends_on:
       - db
+  
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-volume:/data
+    ports:
+      - 6379:6379

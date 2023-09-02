@@ -52,3 +52,13 @@ services:
       - redis-volume:/data
     ports:
       - 6379:6379
+
+  echo-server:
+    image: broadcast-echo-server
+    build: ./echo
+    ports:
+    - "6001:6001"
+    command: laravel-echo-server start
+    volumes:
+    - ./backend:/work
+    working_dir: /work
